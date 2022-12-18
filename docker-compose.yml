@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  serv25:
+    build:
+      context: .
+      dockerfile: ./25/Dockerfile
+    container_name: '25'
+    volumes:
+      - ./25:/app
+    ports:
+      - 5050:5000
+
+  serv11:
+    build:
+      context: .
+      dockerfile: ./11/Dockerfile
+    container_name: '11'
+    volumes:
+      - ./11:/app
+    depends_on:
+      - serv25
+    ports:
+      - 5051:5001
+
+  serv99:
+    build:
+      context: .
+      dockerfile: ./99/Dockerfile
+    container_name: '99'
+    volumes:
+      - ./99:/app
+    depends_on:
+      - serv11
+    ports:
+      - 5052:5002  
+
+  serv132:
+    build:
+      context: .
+      dockerfile: ./132/Dockerfile
+    container_name: '132'
+    volumes:
+      - ./132:/app
+    depends_on:
+      - serv99
+    ports:
+      - 5053:5003
+
+  serv232:
+    build:
+      context: .
+      dockerfile: ./232/Dockerfile
+    container_name: '232'
+    volumes:
+      - ./232:/app
+    depends_on:
+      - serv132
+    ports:
+      - 5054:5004
+
+  serv54:
+    build:
+      context: .
+      dockerfile: ./54/Dockerfile
+    container_name: '54'
+    volumes:
+      - ./54:/app
+    depends_on:
+      - serv232
+    ports:
+      - 5055:5005
